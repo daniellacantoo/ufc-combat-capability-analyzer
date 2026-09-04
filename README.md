@@ -199,13 +199,29 @@ Justin Gaethje, for example, produces a very polarized profile with particularly
 
 Ilia Topuria has a more distributed profile across the five dimensions.
 
-Khabib Nurmagomedov and Islam Makhachev produce relatively similar overall profiles, which was useful as another exploratory check that the scores were capturing recognizable patterns in the underlying statistics.
-
 These comparisons are not fight predictions. They describe fighter profiles based on the variables available in this dataset.
+
+## Combat capability profiles
+
+The heatmap below shows the five capability scores for a small group of fighters. It gives a quick view of how different fighters can arrive at very different profiles even when all of them are evaluated using the same scoring system.
+
+![UFC Combat Capability Profiles](images/capability_profiles_heatmap.png)
+
+The purpose of this visualization is not to rank these fighters overall, but to make the structure of their profiles easier to compare.
+
+## Fighter comparison: Ilia Topuria vs Justin Gaethje
+
+The radar chart below shows one example of how the capability scores can be used to compare two fighters.
+
+![Ilia Topuria vs Justin Gaethje](images/topuria_vs_gaethje_radar.png)
+
+In this dataset, Gaethje's profile is much more concentrated around Striking and Experience, while Topuria has a more distributed profile across several dimensions.
+
+This does **not** mean that the model predicts Topuria to beat Gaethje, or vice versa. The chart compares their statistical capability profiles; it does not model the interaction between them in an actual fight.
 
 ## Visualizations
 
-The notebook includes several visualizations used throughout the analysis:
+The notebook contains additional visualizations used throughout the analysis, including:
 
 - distributions of the main combat statistics;
 - total-fight distributions;
@@ -213,7 +229,7 @@ The notebook includes several visualizations used throughout the analysis:
 - scatter plots;
 - correlation analysis and heatmap;
 - fighter capability heatmap;
-- radar charts for individual fighter comparisons.
+- radar chart comparison.
 
 The visualizations were not only created for presentation. They were also useful during the analysis for identifying distribution problems, extreme observations, and differences between normalization methods.
 
@@ -259,6 +275,10 @@ UFC-Combat-Capability-Analyzer/
 │
 ├── data/
 │   └── ufc-fighters-statistics.csv
+│
+├── images/
+│   ├── capability_profiles_heatmap.png
+│   └── topuria_vs_gaethje_radar.png
 │
 ├── UFC_Combat_Capability_Analyzer.ipynb
 └── README.md
