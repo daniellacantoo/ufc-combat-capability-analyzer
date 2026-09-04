@@ -6,7 +6,7 @@ I originally thought of it as a **Combat Style Analyzer**, but while working wit
 
 The goal of V1 is not to predict fight winners or determine who is the "best" fighter. It is to build a descriptive and interpretable baseline that can later grow into style analysis, matchup analysis, and eventually fight prediction.
 
-## What the model measures
+## What the Model Measures
 
 Each fighter receives five scores from 0 to 100:
 
@@ -40,7 +40,7 @@ https://www.kaggle.com/datasets/asaniczka/ufc-fighters-statistics
 
 One important limitation is that the dataset does not contain the most recent UFC fights. Because of this, the project should be treated as an analysis of the available historical data rather than a current representation of the UFC roster.
 
-## Data exploration and quality checks
+## Data Exploration and Quality Checks
 
 Before building the scores, I explored the structure and quality of the dataset.
 
@@ -82,7 +82,7 @@ I also adjusted the percentile transformation so that exact zeros remain zero.
 
 This matters especially for Wrestling and Submissions, where a large part of the dataset contains zero values. Without this adjustment, fighters with no recorded activity in a metric could still receive a positive percentile score simply because many other fighters also had zero.
 
-## Capability scores
+## Capability Scores
 
 ### Striking
 
@@ -135,7 +135,7 @@ To avoid treating draws exactly like losses, I calculated an **Adjusted Win Rate
 
 This is still a basic approximation of experience because the dataset does not provide a direct measure of opponent quality.
 
-## Sample reliability
+## Sample Reliability
 
 One concern during the analysis was that fighters with very small samples could obtain extreme statistics from only a few fights.
 
@@ -152,8 +152,8 @@ Across the complete dataset, approximately **28.3%** of fighters belong to the L
 
 Among the highest scores:
 
-| Score | Low / Very Low in top 10% |
-|---|---:|
+| Score | Low / Very Low in Top 10% |
+| --- | ---: |
 | Striking | 29.4% |
 | Wrestling | 30.8% |
 | Submissions | 24.0% |
@@ -163,14 +163,14 @@ There was no clear general overrepresentation of small samples among the highest
 
 Because of this, I decided not to introduce an arbitrary shrinkage adjustment in V1. Sample reliability is kept as additional information for interpretation instead.
 
-## Weight sensitivity
+## Weight Sensitivity
 
 The 50/50 weights are baseline choices, not optimized parameters.
 
 To test how dependent the rankings were on these choices, I compared the original 50/50 configuration with 60/40 and 40/60 alternatives using Spearman rank correlation.
 
 | Score | 50/50 vs 60/40 | 50/50 vs 40/60 | 60/40 vs 40/60 |
-|---|---:|---:|---:|
+| --- | ---: | ---: | ---: |
 | Striking | 0.994 | 0.994 | 0.976 |
 | Wrestling | 0.998 | 0.998 | 0.991 |
 | Defense | 0.990 | 0.993 | 0.968 |
@@ -179,7 +179,7 @@ The rankings remained very similar under moderate changes in the weights.
 
 This does not prove that 50/50 is the optimal weighting. It only shows that the main rankings in V1 are not highly sensitive to small changes in those assumptions.
 
-## Some findings
+## Some Findings
 
 The distributions of the combat metrics are quite different from each other.
 
@@ -201,7 +201,7 @@ Ilia Topuria has a more distributed profile across the five dimensions.
 
 These comparisons are not fight predictions. They describe fighter profiles based on the variables available in this dataset.
 
-## Combat capability profiles
+## Combat Capability Profiles
 
 The heatmap below shows the five capability scores for a small group of fighters. It gives a quick view of how different fighters can arrive at very different profiles even when all of them are evaluated using the same scoring system.
 
@@ -209,7 +209,7 @@ The heatmap below shows the five capability scores for a small group of fighters
 
 The purpose of this visualization is not to rank these fighters overall, but to make the structure of their profiles easier to compare.
 
-## Fighter comparison: Ilia Topuria vs Justin Gaethje
+## Fighter Comparison: Ilia Topuria vs Justin Gaethje
 
 The radar chart below shows one example of how the capability scores can be used to compare two fighters.
 
@@ -251,7 +251,7 @@ There are several limitations to this first version:
 
 For these reasons, the Combat Capability Analyzer should be understood as a **descriptive and exploratory tool**, not as a system for automatically deciding who is the better fighter or who would win a fight.
 
-## Future work
+## Future Work
 
 V1 is intended as a baseline rather than a finished model.
 
@@ -268,10 +268,10 @@ Some directions I would like to explore next are:
 
 The idea is not to replace this first version, but to build additional layers on top of a baseline that can already be inspected, interpreted, and questioned.
 
-## Repository structure
+## Repository Structure
 
 ```text
-UFC-Combat-Capability-Analyzer/
+ufc-combat-capability-analyzer/
 │
 ├── data/
 │   └── ufc-fighters-statistics.csv
@@ -281,10 +281,12 @@ UFC-Combat-Capability-Analyzer/
 │   └── topuria_vs_gaethje_radar.png
 │
 ├── UFC_Combat_Capability_Analyzer.ipynb
-└── README.md
+├── README.md
+├── requirements.txt
+└── LICENSE
 ```
 
-## How to run the project
+## How to Run the Project
 
 The analysis is contained in the Jupyter Notebook:
 
@@ -300,12 +302,18 @@ To reproduce the analysis:
 
 1. Download or clone the repository.
 2. Keep the repository structure unchanged.
-3. Open `UFC_Combat_Capability_Analyzer.ipynb` in Jupyter Notebook or JupyterLab.
-4. Run the notebook from top to bottom.
+3. Install the required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+4. Open `UFC_Combat_Capability_Analyzer.ipynb` in Jupyter Notebook or JupyterLab.
+5. Run the notebook from top to bottom.
 
 The notebook was tested by restarting the kernel and running all cells from a clean state.
 
-## Tools used
+## Tools Used
 
 - Python
 - pandas
@@ -313,10 +321,14 @@ The notebook was tested by restarting the kernel and running all cells from a cl
 - Matplotlib
 - Jupyter Notebook
 
-## Final note
+## License
+
+The project code and documentation are released under the MIT License.
+
+The UFC Fighters' Statistics Dataset is distributed separately under the ODC Attribution (ODC-By) license and remains subject to its original licensing terms.
+
+## Final Note
 
 This is the first complete version of the project, but it is also part of my process of learning how to apply data analysis to combat sports.
 
 One of the most useful parts of building it was not just creating the scores. It was having to decide what the data actually supports, test some of those decisions, and recognize where the model stops being able to answer a question.
-
-That is also why I kept the distinction between **capability, style, matchup, and prediction** throughout the project. They are related problems, but they are not the same problem.
